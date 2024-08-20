@@ -133,9 +133,15 @@ public class PaymentRequest extends PaymentsTerminalRequest {
 	public void setOtp(String otp) {
 		this.otp = otp;
 	}
-	
-	
 
-	
 
+	@Override
+	public String getRequestReference() {
+		return requestReference;
+	}
+
+	@Override
+	public void setRequestReference(String requestReference) {
+		this.requestReference = requestReference;
+	}
 }
