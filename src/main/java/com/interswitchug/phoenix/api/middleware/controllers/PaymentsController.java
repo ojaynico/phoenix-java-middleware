@@ -10,52 +10,64 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("isw/payments")
 public class PaymentsController {
 
-    private PaymentsService paymentsService;
+    private final PaymentsService paymentsService;
 
     public PaymentsController(PaymentsService paymentsService) {
         this.paymentsService = paymentsService;
     }
 
     @PostMapping("/validation")
-    public String validateCustomer(@RequestBody PaymentRequest request) throws Exception {
+    public String validateCustomer(@RequestBody PaymentRequest request,
+                                   @RequestHeader("AuthToken") String authToken,
+                                   @RequestHeader("TerminalKey") String terminalKey) throws Exception {
 
-        return paymentsService.validateCustomer(request);
+        return paymentsService.validateCustomer(request, authToken, terminalKey);
     }
 
     @PostMapping("/pay")
-    public String doPayment(@RequestBody PaymentRequest registrationDetail) throws Exception {
+    public String doPayment(@RequestBody PaymentRequest registrationDetail,
+                           @RequestHeader("AuthToken") String authToken,
+                           @RequestHeader("TerminalKey") String terminalKey) throws Exception {
 
-        return paymentsService.makePayment(registrationDetail);
+        return paymentsService.makePayment(registrationDetail, authToken, terminalKey);
     }
 
     @GetMapping("/checkStatus")
-    public String checkStatus(@PathParam("requestReference") String requestReference) throws Exception {
+    public String checkStatus(@PathParam("requestReference") String requestReference,
+                             @RequestHeader("AuthToken") String authToken,
+                             @RequestHeader("TerminalKey") String terminalKey) throws Exception {
 
-        return paymentsService.checkStatus(requestReference);
+        return paymentsService.checkStatus(requestReference, authToken, terminalKey);
     }
 
     @GetMapping("/balance")
-    public String getBalance() throws Exception {
+    public String getBalance(@RequestHeader("AuthToken") String authToken,
+                            @RequestHeader("TerminalKey") String terminalKey) throws Exception {
 
-        return paymentsService.fetchBalance();
+        return paymentsService.fetchBalance(authToken, terminalKey);
     }
 
     @GetMapping("/billerCategories")
-    public String getBillerCategories() throws Exception {
+    public String getBillerCategories(@RequestHeader("AuthToken") String authToken,
+                                     @RequestHeader("TerminalKey") String terminalKey) throws Exception {
 
-        return paymentsService.getCategories();
+        return paymentsService.getCategories(authToken, terminalKey);
     }
 
     @GetMapping("/categoryBillers")
-    public String getBillersByCategory(@PathParam("categoryId") String categoryId) throws Exception {
+    public String getBillersByCategory(@PathParam("categoryId") String categoryId,
+                                      @RequestHeader("AuthToken") String authToken,
+                                      @RequestHeader("TerminalKey") String terminalKey) throws Exception {
 
-        return paymentsService.getCategoryBillers(categoryId);
+        return paymentsService.getCategoryBillers(categoryId, authToken, terminalKey);
     }
 
     @GetMapping("/billerItems")
-    public String getPaymentItemsByBiller(@PathParam("billerId") String billerId) throws Exception {
+    public String getPaymentItemsByBiller(@PathParam("billerId") String billerId,
+                                         @RequestHeader("AuthToken") String authToken,
+                                         @RequestHeader("TerminalKey") String terminalKey) throws Exception {
 
-        return paymentsService.getBillerItems(billerId);
+        return paymentsService.getBillerItems(billerId, authToken, terminalKey);
     }
 
 }
