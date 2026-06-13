@@ -39,5 +39,5 @@ jobs:
           application_name: 'phoenix-middleware'
           environment_name: 'Phoenix-middleware-env'
           version_label: 'deploy-${{ steps.tm.outputs.timestamp }}'
-          region: 'us-east-1'
+          region: 'us-east-2'
           deployment_package: 'target/application.jar'
